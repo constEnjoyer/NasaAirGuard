@@ -1,84 +1,88 @@
-# AirGuard: Прогноз чистого неба 🌍
+# AirGuard: Cleaner Skies Forecast 🌍
 
-Современная веб-панель для прогнозирования качества воздуха, созданная для NASA Space Apps Challenge 2025.
+A modern web dashboard for air quality forecasting, built for the NASA Space Apps Challenge 2025.
 
-## 🚀 Возможности
+## 🚀 Features
 
-- **Интерактивная карта** с данными спутника NASA TEMPO (NO₂) за 1 октября 2024
-- **24-часовой прогноз ИКВ** с правилами на основе озона и скорости ветра
-- **Умные предупреждения** о качестве воздуха
-- **Персонализированные рекомендации** для здоровья на основе текущего ИКВ
-- **Темная/светлая тема** для комфортного просмотра
-- **Адаптивный дизайн** для всех устройств
+- **Interactive Map** with NASA TEMPO satellite data (NO₂) for October 1, 2025
+- **24-Hour AQI Forecast** using rule-based predictions based on ozone and wind speed
+- **Smart Alerts** for poor air quality conditions
+- **Personalized Health Recommendations** based on current AQI levels
+- **Dark/Light Theme Toggle** for comfortable viewing
+- **Responsive Design** across all devices
 
-## 📊 Источники данных
+## 📊 Data Sources
 
-- **NASA GIBS/Worldview** - Публичные спутниковые данные TEMPO (NO₂) без API ключей
-- **NOAA** - Публичные данные о погоде (скорость ветра, температура)
-- **Реалистичные данные** - Типичные значения ИКВ для городов на основе исторических данных
+- **NASA GIBS/Worldview** - Public TEMPO satellite data (NO₂) without API keys
+- **NOAA** - Public weather data (wind speed, temperature)
+- **Simulated Realistic Data** - Typical AQI values for cities based on historical trends
 
-## 🛠️ Технологии
+## 🛠️ Tech Stack
 
-- **Next.js 15** - React фреймворк с App Router
-- **TypeScript** - Типобезопасность
-- **Tailwind CSS v4** - Современные стили
-- **Leaflet.js** - Интерактивные карты
-- **Recharts** - Графики прогнозов
-- **SWR** - Кэширование данных на клиенте
-- **Vercel** - Развертывание
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS v4** - Modern styling
+- **Leaflet.js** - Interactive maps
+- **Recharts** - Forecast charts
+- **SWR** - Client-side data caching
+- **Vercel** - Deployment
 
-## 📦 Установка
+## 🌐 Live Demo
 
-1. Клонируйте репозиторий:
-\`\`\`bash
-git clone <your-repo-url>
-cd airguard-dashboard
-\`\`\`
+Test the app live: [https://nasa-air-guard.vercel.app/](https://nasa-air-guard.vercel.app/)
 
-2. Установите зависимости:
-\`\`\`bash
-npm install
-\`\`\`
+## 📦 Installation
 
-3. Запустите сервер разработки:
-\`\`\`bash
-npm run dev
-\`\`\`
+1. Clone the repository:
+   ```bash
+   git clone <your-repo-url>
+   cd airguard-dashboard
+   ```
 
-4. Откройте http://localhost:3000
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-**Примечание:** API ключи НЕ требуются! Приложение использует только публичные API.
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-## 🌐 Развертывание на Vercel
+4. Open [http://localhost:3000](http://localhost:3000)
 
-1. Нажмите кнопку "Publish" в v0 или используйте Vercel CLI:
-\`\`\`bash
-vercel
-\`\`\`
+**Note:** No API keys required! The app uses only public APIs.
 
-2. Разверните:
-\`\`\`bash
-vercel --prod
-\`\`\`
+## 🌐 Deployment on Vercel
 
-**Никаких переменных окружения не требуется!**
+1. Click "Publish" in v0 or use Vercel CLI:
+   ```bash
+   vercel
+   ```
+
+2. Deploy to production:
+   ```bash
+   vercel --prod
+   ```
+
+**No environment variables needed!**
 
 ## 🔧 API Endpoints
 
-### GET /api/aqi?city={city}
+### GET `/api/aqi?city={city}`
 
-Получает данные о качестве воздуха для указанного города.
+Fetches air quality data for the specified city.
 
-**Параметры:**
-- `city` - "NYC" или "LA" (по умолчанию: "NYC")
+**Parameters:**
+- `city` - "NYC" or "LA" (default: "NYC")
 
-**Ответ:**
-\`\`\`json
+**Response:**
+```json
 {
   "city": "NYC",
   "current": {
     "aqi": 58,
-    "timestamp": "2025-02-10T12:00:00Z",
+    "timestamp": "2025-10-01T12:00:00Z",
     "pollutants": {
       "pm25": 13.2,
       "pm10": 24.8,
@@ -93,59 +97,59 @@ vercel --prod
   "forecast": [...],
   "alerts": [...],
   "dataSource": "NASA GIBS/Worldview + NOAA",
-  "dataDate": "2024-10-01"
+  "dataDate": "2025-10-01"
 }
-\`\`\`
+```
 
-**Кэширование:** 5 минут (300 секунд)
+**Caching:** 5 minutes (300 seconds)
 
-## 📈 Логика прогноза
+## 📈 Forecast Logic
 
-Прогноз ИКВ использует правила на основе данных:
+The AQI forecast uses rule-based logic from the data:
 
-- Если **O₃ > 70** и **скорость ветра < 5 м/с** → ИКВ увеличивается на 20%
-- Если **O₃ > 60** и **скорость ветра < 6 м/с** → ИКВ увеличивается на 10%
-- Добавляется вариация в зависимости от времени суток (пик около полудня)
-- Небольшая случайная вариация для реалистичности
+- If **O₃ > 70 ppb** and **wind speed < 5 m/s** → AQI increases by 20%
+- If **O₃ > 60 ppb** and **wind speed < 6 m/s** → AQI increases by 10%
+- Adds diurnal variation (peak around midday)
+- Includes slight random variation for realism
 
-## 🗺️ Карта
+## 🗺️ Map
 
-Карта использует публичный WMTS сервис NASA GIBS для отображения данных TEMPO NO₂:
+The map uses NASA's public WMTS service for TEMPO NO₂ data:
 
-\`\`\`
-https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/TEMPO_L2_NO2_Total_Column/default/2024-10-01/...
-\`\`\`
+```
+https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/TEMPO_L2_NO2_Total_Column/default/2025-10-01/...
+```
 
-Данные за **1 октября 2024** года - самые свежие доступные публичные данные.
+Data for **October 1, 2025** - the latest available public dataset.
 
-## 🎨 Дизайн
+## 🎨 Design
 
-- **Цветовая схема:** Синий (primary), нейтральные тона
-- **Типографика:** Geist Sans, Geist Mono
-- **Компоненты:** shadcn/ui
-- **Анимации:** Плавные переходы с Tailwind CSS
+- **Color Scheme:** Blue (primary), neutral tones
+- **Typography:** Geist Sans, Geist Mono
+- **Components:** shadcn/ui
+- **Animations:** Smooth transitions with Tailwind CSS
 
-## 📱 Адаптивность
+## 📱 Responsiveness
 
-- **Mobile:** < 768px - Вертикальная компоновка
-- **Tablet:** 768px - 1024px - Сетка 2 колонки
-- **Desktop:** > 1024px - Полная сетка 3 колонки
+- **Mobile:** < 768px - Vertical layout
+- **Tablet:** 768px - 1024px - 2-column grid
+- **Desktop:** > 1024px - Full 3-column grid
 
-## 🔒 Безопасность
+## 🔒 Security
 
-- Все API публичные, ключи не требуются
-- Серверные API маршруты для оптимизации производительности
-- CORS настроен для безопасных запросов
+- All APIs are public; no keys required
+- Server-side API routes for performance optimization
+- CORS configured for secure requests
 
-## 🤝 Вклад
+## 🤝 Contributing
 
-Создано для NASA Space Apps Challenge 2025. Вклад приветствуется!
+Built for NASA Space Apps Challenge 2025. Contributions welcome!
 
-## 📄 Лицензия
+## 📄 License
 
 MIT License
 
-## 🙏 Благодарности
+## 🙏 Acknowledgments
 
 - NASA TEMPO Team
 - NASA GIBS/Worldview
